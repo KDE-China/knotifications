@@ -48,7 +48,11 @@ NotifyByAudio::NotifyByAudio(QObject *parent)
 
     ret = ca_context_change_props(m_context,
         CA_PROP_APPLICATION_NAME, qUtf8Printable(qApp->applicationDisplayName()),
+#if QT_VERSION >= 0x050700
         CA_PROP_APPLICATION_ID, qUtf8Printable(qApp->desktopFileName()),
+#else
+	"Unimplemented"
+#endif
         CA_PROP_APPLICATION_ICON_NAME, qUtf8Printable(qApp->windowIcon().name()),
         nullptr);
     if (ret != CA_SUCCESS) {
